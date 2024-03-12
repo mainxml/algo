@@ -10,6 +10,7 @@ export default defineConfig({
     build: {
         // 不混淆代码
         minify: false,
+        // 输出目录，设为'${你自己项目路径}/app/src/main/assets/algo/'
         outDir: 'D:/Study/Android/VisuAlgo/app/src/main/assets/algo/',
         emptyOutDir: true
     },
