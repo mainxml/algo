@@ -111,20 +111,18 @@ export default class Algo {
         for (let i = 1; i < n; i++) {
             let base = a[i];
             let j = i - 1;
-            this.track(callback, false, ['i', i])
+            this.track(callback, false, ['i', i]);
             callback.onUp(i, true);
 
             while (j >= 0 && a[j] > base) {
-                this.track(callback, false, ['j', j])
+                this.track(callback, false, ['j', j]);
                 callback.onMove(j, j + 1, false);
-
                 a[j + 1] = a[j];
                 j--;
             }
-            a[j + 1] = base;
 
-            this.track(callback)
-            callback.onMove(i, j + 1, true);
+            a[j + 1] = base;
+            this.track(callback); callback.onMove(i, j + 1, true);
             callback.onDown(i);
         }
 
@@ -221,12 +219,15 @@ export default class Algo {
     private filterCharacter(sourceCode: string): string {
         let lines = sourceCode.split('\n')
         for (let i = 0; i < lines.length; i++) {
-            if (lines[i].includes(', callback')) {
-                lines[i] = lines[i].replace(', callback', '')
-            }
             if (i == 0) {
                 lines[i] = 'function ' + lines[i]
                 continue
+            }
+            if (lines[i].includes(', callback')) {
+                lines[i] = lines[i].replace(', callback', '')
+            }
+            if (lines[i].includes('callback.')) {
+                lines[i] = lines[i].replace('callback.', '// callback.')
             }
             if (lines[i].includes('this.')) {
                 lines[i] = lines[i].replace('this.', '')
